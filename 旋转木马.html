@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            /* 视距放在不动的父元素上 */
+            perspective: 1100px;
+            background-color: aqua;
+        }
+
+        ul {
+
+            list-style: none;
+            margin: 300px auto;
+            width: 200px;
+            height: 280px;
+            /* 边款内置 */
+            box-sizing: border-box;
+            /* border: 1px solid gold; */
+            position: relative;
+            transform-style: preserve-3d;
+            background: url(img/10.jpg) no-repeat center/cover;
+        }
+
+        li {
+            width: 100%;
+            height: 100%;
+            box-sizing: border-box;
+            background: url(img/girl1.jpg) no-repeat center/cover;
+            position: absolute;
+            border: 1px solid gold;
+            box-shadow: 0px 0px 10px 0px gold;
+            /* transition: all 1s steps(5); */
+            /* transform-origin: left; */
+        }
+
+        li:nth-child(6) {
+
+            background-image: url(img/girl3.jpg);
+        }
+        li:nth-child(5) {
+
+            background-image: url(img/girl5.jpg);
+        }
+
+        li:nth-child(4) {
+
+            background-image: url(img/girl4.jpg);
+        }
+
+        li:nth-child(3) {
+
+            background-image: url(img/girl3.jpg);
+        }
+
+        li:nth-child(2) {
+
+            background-image: url(img/girl2.jpg);
+        }
+        /* ul:hover {
+            transition: all 1s;
+            transform: rotateX(-90deg);
+        } */
+        ul:hover li:nth-child(6){
+            transition: all 1s;
+            transform: rotateY(60deg) translateZ(500px)  ;
+        }
+
+        ul:hover li:nth-child(5){
+            transition: all 2s 0.8s;
+            transform: rotateY(120deg)  translateZ(500px) ;
+        }
+        ul:hover li:nth-child(4){
+            transition: all 3s 1.9s;
+            transform: rotateY(180deg) translateZ(500px)   ;
+        }
+        ul:hover li:nth-child(3){
+            transition: all 3s 2.9s;
+            transform: rotateY(240deg) translateZ(500px) ;
+        }
+        ul:hover li:nth-child(2){
+            transition: all 4s 3.9s;
+            transform: rotateY(300deg) translateZ(500px) ;
+        }
+        ul:hover li:nth-child(1){
+            transition: all 5s 4.9s;
+            transform: rotateY(360deg) translateZ(500px) ;
+        }
+        ul:hover {
+            transition: all 150s 6s linear  ;
+            transform: rotateY(1800deg);
+        }
+       
+        .box{
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 引入音乐 -->
+    <embed src="咱们结婚吧.mp3" title="第一首歌" loop=2  height=0px width='0px' palette="pink|none" style="visibility:hidden"> 
+    <!-- <audio src="http://sc1.111ttt.cn/2018/1/03/13/396131232171.mp3" controls="controls" autoplay="autoplay" loop='loop'></audio> -->
+    <!-- 木马主体 -->
+    <div class="box">
+        <ul>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+        </ul>
+    </div>
+    
+    <script src="http://code.jquery.com/jquery-latest.js"></script>
+<script>
+     function snow() {
+             $('body').css({
+                    //  'backgroundColor':'black',
+                     "overflow":"hidden"
+                 });
+            //1、定义一片雪花模板
+            var flake = $("<div></div>").css({
+                "position": "absolute",
+            }).text("❤");
+            //获取页面的宽度，利用这个数来算出，雪花开始时left的值
+            var domWidth = $(document).width();
+
+            //获取页面的高度 相当于雪花下落结束时Y轴的位置
+            var domHeight = $(document).height();
+
+            //定义生成一片雪花的毫秒数
+            var millisec =600;
+            //2、设置第一个定时器，周期性定时器，每隔一段时间（millisec）生成一片雪花；
+            setInterval(function() {
+                //随机生成雪花下落 开始 时left的值，相当于开始时X轴的位置
+                var startLeft = Math.random() * domWidth;
+
+                //随机生成雪花下落 结束 时left的值，相当于结束时X轴的位置
+                var endLeft = Math.random() * domWidth;
+
+                //随机生成雪花大小
+                var flakeSize = 50 + 20 * Math.random();
+
+                //随机生成雪花下落持续时间
+                var durationTime = 4000 + 7000 * Math.random();
+
+                //随机生成雪花下落 开始 时的透明度
+                var startOpacity = 0.7 + 0.3 * Math.random();
+
+                //随机生成雪花下落 结束 时的透明度
+                var endOpacity = 0.2 + 0.2 * Math.random();
+                //3、克隆一个雪花模板,定义雪花的初始样式，拼接到页面中
+                flake.clone().appendTo($("body")).css({
+                    "left": startLeft,
+                    "opacity": startOpacity,
+                    "font-size": flakeSize,
+                    "top": "-25px",
+                    "color":"pink"
+                    // 'color':'rgb('+Math.floor(Math.random()*255)+','+Math.floor(Math.random()*255)+','+Math.floor(Math.random()*255)+')'
+                }).animate({ //执行动画
+                    "left": endLeft,
+                    "opacity": endOpacity,
+                    "top": domHeight,
+                }, durationTime, function() {
+                    //4、当雪花落下后，删除雪花。
+                    $(this).remove();
+                });
+            }, millisec);
+        };
+        snow();
+</script>
+</body>
+
+</html>
